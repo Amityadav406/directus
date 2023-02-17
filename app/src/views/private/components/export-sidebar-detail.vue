@@ -444,10 +444,19 @@ function useUpload() {
 				title: t('import_data_success', { filename: file.name }),
 			});
 		} catch (err: any) {
+			// notify({
+			// 	title: t('import_data_error'),
+			// 	type: 'error',
+			// });
+
 			notify({
-				title: t('import_data_error'),
+				title: t(`errors.${err?.response?.data?.errors?.[0]?.extensions?.code}`) || t('import_data_error'),
 				type: 'error',
 			});
+
+			if (err?.response?.data?.errors?.[0]?.extensions?.code === 'INTERNAL_SERVER_ERROR') {
+				unexpectedError(err);
+			}
 		} finally {
 			uploading.value = false;
 			importing.value = false;
