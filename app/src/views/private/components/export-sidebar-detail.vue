@@ -435,9 +435,7 @@ function useUpload() {
 					importing.value = percentCompleted === 100 ? true : false;
 				},
 			});
-
 			clearFileInput();
-
 			emit('refresh');
 
 			notify({
